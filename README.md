@@ -85,4 +85,6 @@ for crlf in $(cat crlfpayload.txt); do for url in $(gautest.com | grep "=" | qsr
 
 **AUTOMATE BROKEN LINK HIJACKING****
 
+INSTALL blc
+
 subfinder -dL -silent | httpx -silent | parllel -j 10 blc {} | grep "broken"
